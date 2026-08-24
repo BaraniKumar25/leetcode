@@ -1,21 +1,16 @@
-# Last updated: 8/24/2026, 9:11:27 AM
+# Last updated: 8/24/2026, 9:11:49 AM
 1class Solution:
 2
-3  def countNodes(self, root: Optional[TreeNode]) -> int:
-4    if not root:
-5      return 0
-6
-7    left_height = self._get_left_height(root.left)
-8    right_height = self._get_left_height(root.right)
-9
-10    if left_height == right_height:
-11      return (1 << left_height) + self.countNodes(root.right)
-12    else:
-13      return (1 << right_height) + self.countNodes(root.left)
+3  def lowestCommonAncestor(
+4      self, root: 'TreeNode', p: 'TreeNode', q: 'TreeNode'
+5  ) -> 'TreeNode':
+6    if not root or root == p or root == q:
+7      return root
+8
+9    left = self.lowestCommonAncestor(root.left, p, q)
+10    right = self.lowestCommonAncestor(root.right, p, q)
+11
+12    if left and right:
+13      return root
 14
-15  def _get_left_height(self, node: Optional[TreeNode]) -> int:
-16    height = 0
-17    while node:
-18      height += 1
-19      node = node.left
-20    return height
+15    return left if left else right
