@@ -1,22 +1,18 @@
-# Last updated: 8/24/2026, 9:29:37 AM
+# Last updated: 8/24/2026, 9:30:19 AM
 1class Solution:
 2
-3  def getMinimumDifference(self, root: Optional[TreeNode]) -> int:
-4    min_diff = float('inf')
-5    prev = None
+3  def kthSmallest(self, root: Optional[TreeNode], k: int) -> int:
+4    stack = []
+5    curr = root
 6
-7    def inorder(node):
-8      nonlocal min_diff, prev
-9      if not node:
-10        return
+7    while curr or stack:
+8      while curr:
+9        stack.append(curr)
+10        curr = curr.left
 11
-12      inorder(node.left)
-13
-14      if prev is not None:
-15        min_diff = min(min_diff, node.val - prev)
-16      prev = node.val
-17
-18      inorder(node.right)
-19
-20    inorder(root)
-21    return min_diff
+12      curr = stack.pop()
+13      k -= 1
+14      if k == 0:
+15        return curr.val
+16
+17      curr = curr.right
