@@ -1,21 +1,20 @@
-# Last updated: 8/24/2026, 8:57:51 AM
-1class Solution:
+# Last updated: 8/24/2026, 8:58:44 AM
+1class BSTIterator:
 2
-3  def maxPathSum(self, root: Optional[TreeNode]) -> int:
-4    max_sum = float('-inf')
-5
-6    def get_max_gain(node):
-7      nonlocal max_sum
-8      if not node:
-9        return 0
-10
-11      left_gain = max(get_max_gain(node.left), 0)
-12      right_gain = max(get_max_gain(node.right), 0)
-13
-14      current_path_sum = node.val + left_gain + right_gain
-15      max_sum = max(max_sum, current_path_sum)
-16
-17      return node.val + max(left_gain, right_gain)
-18
-19    get_max_gain(root)
-20    return max_sum
+3  def __init__(self, root: Optional[TreeNode]):
+4    self.stack = []
+5    self._push_left(root)
+6
+7  def _push_left(self, node):
+8    while node:
+9      self.stack.append(node)
+10      node = node.left
+11
+12  def next(self) -> int:
+13    top_node = self.stack.pop()
+14    if top_node.right:
+15      self._push_left(top_node.right)
+16    return top_node.val
+17
+18  def hasNext(self) -> bool:
+19    return len(self.stack) > 0
