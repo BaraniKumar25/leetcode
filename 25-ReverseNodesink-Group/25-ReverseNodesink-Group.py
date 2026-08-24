@@ -1,16 +1,21 @@
-# Last updated: 8/24/2026, 8:57:29 AM
+# Last updated: 8/24/2026, 8:57:51 AM
 1class Solution:
 2
-3  def sumNumbers(self, root: Optional[TreeNode]) -> int:
-4    def dfs(node, current_sum):
-5      if not node:
-6        return 0
-7
-8      current_sum = current_sum * 10 + node.val
-9
-10      if not node.left and not node.right:
-11        return current_sum
-12
-13      return dfs(node.left, current_sum) + dfs(node.right, current_sum)
-14
-15    return dfs(root, 0)
+3  def maxPathSum(self, root: Optional[TreeNode]) -> int:
+4    max_sum = float('-inf')
+5
+6    def get_max_gain(node):
+7      nonlocal max_sum
+8      if not node:
+9        return 0
+10
+11      left_gain = max(get_max_gain(node.left), 0)
+12      right_gain = max(get_max_gain(node.right), 0)
+13
+14      current_path_sum = node.val + left_gain + right_gain
+15      max_sum = max(max_sum, current_path_sum)
+16
+17      return node.val + max(left_gain, right_gain)
+18
+19    get_max_gain(root)
+20    return max_sum
