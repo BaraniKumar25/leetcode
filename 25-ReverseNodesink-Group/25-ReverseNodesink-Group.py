@@ -1,4 +1,4 @@
-# Last updated: 8/24/2026, 8:51:41 AM
+# Last updated: 8/24/2026, 8:52:00 AM
 1class Solution:
 2
 3  def invertTree(self, root: Optional[TreeNode]) -> Optional[TreeNode]:
