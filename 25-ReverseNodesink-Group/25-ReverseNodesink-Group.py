@@ -1,20 +1,21 @@
-# Last updated: 8/24/2026, 8:58:44 AM
-1class BSTIterator:
+# Last updated: 8/24/2026, 9:11:27 AM
+1class Solution:
 2
-3  def __init__(self, root: Optional[TreeNode]):
-4    self.stack = []
-5    self._push_left(root)
+3  def countNodes(self, root: Optional[TreeNode]) -> int:
+4    if not root:
+5      return 0
 6
-7  def _push_left(self, node):
-8    while node:
-9      self.stack.append(node)
-10      node = node.left
-11
-12  def next(self) -> int:
-13    top_node = self.stack.pop()
-14    if top_node.right:
-15      self._push_left(top_node.right)
-16    return top_node.val
-17
-18  def hasNext(self) -> bool:
-19    return len(self.stack) > 0
+7    left_height = self._get_left_height(root.left)
+8    right_height = self._get_left_height(root.right)
+9
+10    if left_height == right_height:
+11      return (1 << left_height) + self.countNodes(root.right)
+12    else:
+13      return (1 << right_height) + self.countNodes(root.left)
+14
+15  def _get_left_height(self, node: Optional[TreeNode]) -> int:
+16    height = 0
+17    while node:
+18      height += 1
+19      node = node.left
+20    return height
