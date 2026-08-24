@@ -1,18 +1,25 @@
-# Last updated: 8/24/2026, 9:12:19 AM
-1class Solution:
+# Last updated: 8/24/2026, 9:12:41 AM
+1from collections import deque
 2
-3  def rightSideView(self, root: Optional[TreeNode]) -> List[int]:
-4    res = []
+3
+4class Solution:
 5
-6    def dfs(node, depth):
-7      if not node:
-8        return
+6  def averageOfLevels(self, root: Optional[TreeNode]) -> List[float]:
+7    res = []
+8    queue = deque([root])
 9
-10      if depth == len(res):
-11        res.append(node.val)
-12
-13      dfs(node.right, depth + 1)
-14      dfs(node.left, depth + 1)
-15
-16    dfs(root, 0)
-17    return res
+10    while queue:
+11      level_sum = 0
+12      level_count = len(queue)
+13
+14      for _ in range(level_count):
+15        node = queue.popleft()
+16        level_sum += node.val
+17        if node.left:
+18          queue.append(node.left)
+19        if node.right:
+20          queue.append(node.right)
+21
+22      res.append(level_sum / level_count)
+23
+24    return res
