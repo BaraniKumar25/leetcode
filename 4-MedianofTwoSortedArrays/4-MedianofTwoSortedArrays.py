@@ -1,18 +1,17 @@
-# Last updated: 8/28/2026, 11:10:09 AM
+# Last updated: 8/28/2026, 11:10:49 AM
 1class Solution:
-2    def longestPalindrome(self, s: str) -> str:
-3        res = ""
-4        for i in range(len(s)):
-5            l, r = i, i
-6            while l >= 0 and r < len(s) and s[l] == s[r]:
-7                if (r - l + 1) > len(res):
-8                    res = s[l:r + 1]
-9                l -= 1
-10                r += 1
-11            l, r = i, i + 1
-12            while l >= 0 and r < len(s) and s[l] == s[r]:
-13                if (r - l + 1) > len(res):
-14                    res = s[l:r + 1]
-15                l -= 1
-16                r += 1
-17        return res
+2    def convert(self, s: str, numRows: int) -> str:
+3        if numRows == 1 or numRows >= len(s):
+4            return s
+5        
+6        rows = [''] * numRows
+7        current_row = 0
+8        going_down = False
+9        
+10        for char in s:
+11            rows[current_row] += char
+12            if current_row == 0 or current_row == numRows - 1:
+13                going_down = not going_down
+14            current_row += 1 if going_down else -1
+15            
+16        return ''.join(rows)
