@@ -1,11 +1,23 @@
-# Last updated: 8/28/2026, 11:09:11 AM
+# Last updated: 8/28/2026, 11:09:46 AM
 1class Solution:
-2    def findMedianSortedArrays(self, nums1: List[int], nums2: List[int]) -> float:
-3        merged = sorted(nums1 + nums2)
-4        n = len(merged)
-5        mid = n // 2
-6        
-7        if n % 2 == 1:
-8            return float(merged[mid])
-9        else:
-10            return (merged[mid - 1] + merged[mid]) / 2.0
+2    def longestPalindrome(self, s: str) -> str:
+3        res = ""
+4        
+5        for i in range(len(s)):
+6            # Odd length palindromes (single character center)
+7            l, r = i, i
+8            while l >= 0 and r < len(s) and s[l] == s[r]:
+9                if (r - l + 1) > len(res):
+10                    res = s[l:r + 1]
+11                l -= 1
+12                r += 1
+13            
+14            # Even length palindromes (two character center)
+15            l, r = i, i + 1
+16            while l >= 0 and r < len(s) and s[l] == s[r]:
+17                if (r - l + 1) > len(res):
+18                    res = s[l:r + 1]
+19                l -= 1
+20                r += 1
+21                
+22        return res
