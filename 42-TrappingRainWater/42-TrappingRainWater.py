@@ -1,23 +1,25 @@
-# Last updated: 9/3/2026, 2:12:32 PM
+# Last updated: 9/3/2026, 2:15:39 PM
 1class Solution:
-2    def multiply(self, num1: str, num2: str) -> str:
-3        if num1 == "0" or num2 == "0":
-4            return "0"
+2    def isMatch(self, s: str, p: str) -> bool:
+3        s_ptr = p_ptr = 0
+4        star_idx = s_tmp_idx = -1
 5
-6        res = [0] * (len(num1) + len(num2))
-7
-8        for i in range(len(num1) - 1, -1, -1):
-9            for j in range(len(num2) - 1, -1, -1):
-10                mul = int(num1[i]) * int(num2[j])
-11                p1, p2 = i + j, i + j + 1
-12                
-13                total = mul + res[p2]
-14                res[p2] = total % 10
-15                res[p1] += total // 10
-16
-17        # Skip leading zeros
-18        start = 0
-19        while start < len(res) and res[start] == 0:
-20            start += 1
-21
-22        return "".join(map(str, res[start:]))
+6        while s_ptr < len(s):
+7            if p_ptr < len(p) and (p[p_ptr] == '?' or p[p_ptr] == s[s_ptr]):
+8                s_ptr += 1
+9                p_ptr += 1
+10            elif p_ptr < len(p) and p[p_ptr] == '*':
+11                star_idx = p_ptr
+12                s_tmp_idx = s_ptr
+13                p_ptr += 1
+14            elif star_idx != -1:
+15                p_ptr = star_idx + 1
+16                s_tmp_idx += 1
+17                s_ptr = s_tmp_idx
+18            else:
+19                return False
+20
+21        while p_ptr < len(p) and p[p_ptr] == '*':
+22            p_ptr += 1
+23
+24        return p_ptr == len(p)
