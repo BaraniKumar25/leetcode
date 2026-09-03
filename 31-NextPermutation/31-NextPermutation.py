@@ -1,4 +1,4 @@
-# Last updated: 9/3/2026, 2:10:45 PM
+# Last updated: 9/3/2026, 2:10:59 PM
 1class Solution:
 2    def firstMissingPositive(self, nums: List[int]) -> int:
 3        n = len(nums)
