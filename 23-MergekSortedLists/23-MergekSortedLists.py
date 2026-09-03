@@ -1,20 +1,28 @@
-# Last updated: 9/3/2026, 2:00:34 PM
+# Last updated: 9/3/2026, 2:03:09 PM
 1class Solution:
-2    def swapPairs(self, head: Optional[ListNode]) -> Optional[ListNode]:
-3        dummy = ListNode(0, head)
-4        prev, curr = dummy, head
+2    def divide(self, dividend: int, divisor: int) -> int:
+3        INT_MAX = 2**31 - 1
+4        INT_MIN = -2**31
 5
-6        while curr and curr.next:
-7            nxtPair = curr.next.next
-8            second = curr.next
+6        # Handle overflow case
+7        if dividend == INT_MIN and divisor == -1:
+8            return INT_MAX
 9
-10            # Swap the pair
-11            second.next = curr
-12            curr.next = nxtPair
-13            prev.next = second
-14
-15            # Update pointers
-16            prev = curr
-17            curr = nxtPair
-18
-19        return dummy.next
+10        # Determine the sign of the result
+11        negative = (dividend < 0) ^ (divisor < 0)
+12
+13        # Work with positive values
+14        a, b = abs(dividend), abs(divisor)
+15        quotient = 0
+16
+17        # Bit shifting approach (exponential sub)
+18        while a >= b:
+19            temp = b
+20            multiple = 1
+21            while a >= (temp << 1):
+22                temp <<= 1
+23                multiple <<= 1
+24            a -= temp
+25            quotient += multiple
+26
+27        return -quotient if negative else quotient
