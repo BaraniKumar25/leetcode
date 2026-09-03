@@ -1,24 +1,20 @@
-# Last updated: 9/3/2026, 1:59:45 PM
-1import heapq
-2
-3class Solution:
-4    def mergeKLists(self, lists: List[Optional[ListNode]]) -> Optional[ListNode]:
-5        heap = []
-6        
-7        # Push the head of each non-empty list into the min-heap
-8        for i, node in enumerate(lists):
-9            if node:
-10                heapq.heappush(heap, (node.val, i, node))
-11                
-12        dummy = ListNode(0)
-13        current = dummy
-14        
-15        while heap:
-16            val, i, node = heapq.heappop(heap)
-17            current.next = node
-18            current = current.next
-19            
-20            if node.next:
-21                heapq.heappush(heap, (node.next.val, i, node.next))
-22                
-23        return dummy.next
+# Last updated: 9/3/2026, 2:00:34 PM
+1class Solution:
+2    def swapPairs(self, head: Optional[ListNode]) -> Optional[ListNode]:
+3        dummy = ListNode(0, head)
+4        prev, curr = dummy, head
+5
+6        while curr and curr.next:
+7            nxtPair = curr.next.next
+8            second = curr.next
+9
+10            # Swap the pair
+11            second.next = curr
+12            curr.next = nxtPair
+13            prev.next = second
+14
+15            # Update pointers
+16            prev = curr
+17            curr = nxtPair
+18
+19        return dummy.next
