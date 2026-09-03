@@ -1,24 +1,23 @@
-# Last updated: 9/3/2026, 2:04:58 PM
+# Last updated: 9/3/2026, 2:05:42 PM
 1class Solution:
-2    def search(self, nums: List[int], target: int) -> int:
-3        left, right = 0, len(nums) - 1
-4
-5        while left <= right:
-6            mid = (left + right) // 2
-7
-8            if nums[mid] == target:
-9                return mid
-10
-11            if nums[left] <= nums[mid]:
-12                if nums[left] <= target < nums[mid]:
-13                    right = mid - 1
-14                else:
-15                    left = mid + 1
-16            else:
-17                if nums[mid] < target <= nums[right]:
-18                    left = mid + 1
-19                else:
-20                    right = mid - 1
+2    def searchRange(self, nums: List[int], target: int) -> List[int]:
+3        def findBound(isFirst: bool) -> int:
+4            left, right = 0, len(nums) - 1
+5            bound = -1
+6            
+7            while left <= right:
+8                mid = (left + right) // 2
+9                if nums[mid] == target:
+10                    bound = mid
+11                    if isFirst:
+12                        right = mid - 1
+13                    else:
+14                        left = mid + 1
+15                elif nums[mid] < target:
+16                    left = mid + 1
+17                else:
+18                    right = mid - 1
+19                    
+20            return bound
 21
-22        return -1
-23        
+22        return [findBound(True), findBound(False)]
