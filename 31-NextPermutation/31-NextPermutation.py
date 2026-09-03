@@ -1,17 +1,24 @@
-# Last updated: 9/3/2026, 2:04:35 PM
+# Last updated: 9/3/2026, 2:04:58 PM
 1class Solution:
-2    def longestValidParentheses(self, s: str) -> int:
-3        stack = [-1]
-4        max_len = 0
-5        
-6        for i, char in enumerate(s):
-7            if char == '(':
-8                stack.append(i)
-9            else:
-10                stack.pop()
-11                if not stack:
-12                    stack.append(i)
-13                else:
-14                    max_len = max(max_len, i - stack[-1])
-15                    
-16        return max_len
+2    def search(self, nums: List[int], target: int) -> int:
+3        left, right = 0, len(nums) - 1
+4
+5        while left <= right:
+6            mid = (left + right) // 2
+7
+8            if nums[mid] == target:
+9                return mid
+10
+11            if nums[left] <= nums[mid]:
+12                if nums[left] <= target < nums[mid]:
+13                    right = mid - 1
+14                else:
+15                    left = mid + 1
+16            else:
+17                if nums[mid] < target <= nums[right]:
+18                    left = mid + 1
+19                else:
+20                    right = mid - 1
+21
+22        return -1
+23        
